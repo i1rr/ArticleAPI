@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>au.com.nine</groupId>
 	<artifactId>ArticleAPI</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1</version>
 	<name>ArticleAPI</name>
 	<description>Test project for Nine</description>
 	<packaging>jar</packaging>

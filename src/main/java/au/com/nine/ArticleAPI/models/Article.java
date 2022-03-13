@@ -3,7 +3,11 @@ package au.com.nine.ArticleAPI.models;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
-
+/** Represents Article model
+ * @author Ivan Resemkin
+ * @version 1.0
+ * @since 1.0
+*/
 @Entity
 @Table(name = "articles")
 public class Article {
@@ -35,6 +39,12 @@ public class Article {
     public Article() {
     }
 
+    /** Creates an article with the required fields.
+     * @param title The article’s title.
+     * @param date The article’s date.
+     * @param body The article’s body.
+     * @param tags The article's tag list.
+     */
     public Article(String title, LocalDate date, String body, List<Tag> tags) {
         this.title = title;
         this.date = date;

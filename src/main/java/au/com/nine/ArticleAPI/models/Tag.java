@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.*;
+/** Represents Tag model
+ * @author Ivan Resemkin
+ * @version 1.0
+ * @since 1.0
+ */
 
 @Entity
 @Table(name = "tags")
