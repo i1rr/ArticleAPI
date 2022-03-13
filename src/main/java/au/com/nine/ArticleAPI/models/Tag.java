@@ -50,11 +50,11 @@ public class Tag {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tag tag = (Tag) o;
-        return id == tag.id && Objects.equals(name, tag.name) && Objects.equals(articles, tag.articles);
+        return Objects.equals(name, tag.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, articles);
+        return Objects.hash(name);
     }
 }

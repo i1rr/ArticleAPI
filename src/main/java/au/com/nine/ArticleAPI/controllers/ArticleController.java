@@ -3,6 +3,7 @@ package au.com.nine.ArticleAPI.controllers;
 import au.com.nine.ArticleAPI.exceptions.ArticleNotFoundException;
 import au.com.nine.ArticleAPI.models.Article;
 import au.com.nine.ArticleAPI.models.Tag;
+import au.com.nine.ArticleAPI.models.TagDate;
 import au.com.nine.ArticleAPI.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+
 /** Represents article controller
  * @author Ivan Resemkin
  * @version 1.0
@@ -40,20 +41,28 @@ public class ArticleController {
     /**
      * @param tagName Filter by provided tag.
      * @param date Filter by provided date.
-     * @return Returns list of expected articles if exists and HttpStatus 200.
+     * @return Returns summary for the day and tag.S
      * @throws ArticleNotFoundException Throws custom exception when Article is not found.
      */
     @GetMapping("/tags/{tagName}/{date}")
-    public ResponseEntity<List<Article>> findByDateAndTag(
+    public ResponseEntity<TagDate> getSummaryByDateAndTag(
             @PathVariable("tagName") String tagName, @PathVariable("date") String date) {
 
-        List<Article> articleList = new ArrayList<>();
-        List<Long> articles = articleRepository.getArticleId(tagName, date);
-        for (long i : articles) {
-            articleList.add(articleRepository.findById(i)
-                    .orElseThrow(() -> new ArticleNotFoundException(i)));
+        TagDate tagDate = new TagDate();
+        tagDate.setTag(new Tag(tagName));
+        int count = 1;
+        Article article;
+
+        List<Long> articleIDs = articleRepository.getArticleIDs(tagName, date);
+        for (long id : articleIDs) {
+            article = articleRepository.findById(id)
+                    .orElseThrow(() -> new ArticleNotFoundException(id));
+
+                tagDate.setCount(count++);
+                tagDate.getArticleIdList().add((int) id);
+                tagDate.getRelated_tags().addAll(article.getTags());
         }
-        return new ResponseEntity<>(articleList, HttpStatus.OK);
+        return new ResponseEntity<>(tagDate, HttpStatus.OK);
     }
 
     /**

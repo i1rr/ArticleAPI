@@ -22,5 +22,5 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
             "INNER JOIN tags AS t ON t.id = at.tag_id " +
             "WHERE t.name = ?1 AND ar.date = ?2 " +
             "GROUP BY ar.id", nativeQuery = true)
-    List<Long> getArticleId(String tagName, String date);
+    List<Long> getArticleIDs(String tagName, String date);
 }
